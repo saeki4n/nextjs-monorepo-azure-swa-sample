@@ -1,50 +1,50 @@
-# Turborepo starter
+# Turborepo スターター
 
-This Turborepo starter is maintained by the Turborepo core team.
+この Turborepo スターターは Turborepo コアチームによって管理されています。
 
-## Using this example
+## このテンプレートの使い方
 
-Run the following command:
+次のコマンドを実行します。
 
 ```sh
 npx create-turbo@latest
 ```
 
-## What's inside?
+## 構成内容
 
-This Turborepo includes the following packages/apps:
+この Turborepo には以下の apps/packages が含まれています。
 
-### Apps and Packages
+### Apps と Packages
 
-- `app1`: a [Next.js](https://nextjs.org/) app
-- `app2`: another [Next.js](https://nextjs.org/) app
-- `@repo/common`: shared utility library used by `app1` and `app2`
-- `@repo/ui`: a stub React component library shared by both `app1` and `app2` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `app1`: [Next.js](https://nextjs.org/) アプリ
+- `app2`: もうひとつの [Next.js](https://nextjs.org/) アプリ
+- `@repo/common`: `app1` と `app2` で共有するユーティリティライブラリ
+- `@repo/ui`: `app1` と `app2` で共有する React コンポーネントライブラリ
+- `@repo/eslint-config`: `eslint` 設定（`eslint-config-next` と `eslint-config-prettier` を含む）
+- `@repo/typescript-config`: モノレポ全体で使う `tsconfig.json`
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+すべての package/app は [TypeScript](https://www.typescriptlang.org/) で構成されています。
 
-### Utilities
+### ユーティリティ
 
-This Turborepo has some additional tools already setup for you:
+この Turborepo では以下のツールを利用できます。
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- [TypeScript](https://www.typescriptlang.org/)（静的型チェック）
+- [ESLint](https://eslint.org/)（コード lint）
+- [Prettier](https://prettier.io)（コード整形）
 
-### Build
+### ビルド
 
-To build all apps and packages, run the following command:
+すべての app/package をビルドするには以下を実行します。
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合（推奨）:
 
 ```sh
 cd my-turborepo
 turbo build
 ```
 
-Without global `turbo`, use your package manager:
+global `turbo` を使わない場合:
 
 ```sh
 cd my-turborepo
@@ -53,38 +53,38 @@ yarn dlx turbo build
 pnpm exec turbo build
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+特定パッケージのみビルドする場合は [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters) を使います。
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合:
 
 ```sh
 turbo build --filter=app1
-# Build app2 instead:
+# app2 をビルドする場合
 turbo build --filter=app2
 ```
 
-Without global `turbo`:
+global `turbo` を使わない場合:
 
 ```sh
 npx turbo build --filter=app1
 yarn exec turbo build --filter=app1
 pnpm exec turbo build --filter=app1
-# Build app2 instead:
+# app2 をビルドする場合
 pnpm exec turbo build --filter=app2
 ```
 
-### Develop
+### 開発
 
-To develop all apps and packages, run the following command:
+すべての app/package を開発モードで起動するには以下を実行します。
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合（推奨）:
 
 ```sh
 cd my-turborepo
 turbo dev
 ```
 
-Without global `turbo`, use your package manager:
+global `turbo` を使わない場合:
 
 ```sh
 cd my-turborepo
@@ -93,61 +93,73 @@ yarn exec turbo dev
 pnpm exec turbo dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+特定パッケージのみ起動する場合は [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters) を使います。
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合:
 
 ```sh
 turbo dev --filter=app1
-# Start app2 instead:
+# app2 を起動する場合
 turbo dev --filter=app2
 ```
 
-Without global `turbo`:
+global `turbo` を使わない場合:
 
 ```sh
 npx turbo dev --filter=app1
 yarn exec turbo dev --filter=app1
 pnpm exec turbo dev --filter=app1
-# Start app2 instead:
+# app2 を起動する場合
 pnpm exec turbo dev --filter=app2
 ```
 
-### VSCode Debug
+### VSCode デバッグ
 
-The following launch profiles are included in `.vscode/launch.json`:
+`.vscode/launch.json` には以下の構成が入っています。
 
 - `app1: Full Stack Debug`
 - `app2: Full Stack Debug`
 
-Select either configuration in VSCode "Run and Debug" to debug each Next.js app independently.
+VSCode の「実行とデバッグ」から選択すると、それぞれの Next.js アプリを個別にデバッグできます。
 
-### API Routes
+### API ルート
 
-Each app has its own Next.js Route Handler:
+それぞれのアプリに Next.js Route Handler を用意しています。
 
 - `app1`: `/api/health`
 - `app2`: `/api/health`
 
-Both endpoints return JSON with `app`, `message`, and `timestamp`.
+どちらの API も `app` / `message` / `timestamp` を含む JSON を返します。
 
-### Remote Caching
+### Azure SWA デプロイメモ（成功した構成）
+
+Azure Static Web Apps で Next.js API Routes を含む構成をデプロイする際、以下の設定で成功を確認しました。
+
+- `next.config.js` で `output: "export"` を使わず、Next.js hybrid 構成にする
+- `app_location` は各アプリのディレクトリ（`apps/app1` / `apps/app2`）を指定する
+- `output_location` は空文字（`""`）のままにする
+- `api_location` は空文字（`""`）のままにして、SWA の Next.js function handler に任せる
+- GitHub Actions の deploy step で `NPM_CONFIG_INSTALL_LINKS: true` を設定する
+- 各アプリの `next.config.js` に `transpilePackages: ["@repo/common", "@repo/ui"]` を設定する
+- 共有パッケージは `file:../../packages/...` のローカル依存として扱う
+
+### リモートキャッシュ
 
 > [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+> Vercel Remote Cache は全プランで無料です。詳細は [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache) を参照してください。
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Turborepo は [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) によって、マシン間でビルドキャッシュを共有できます。チーム開発や CI/CD の高速化に有効です。
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+デフォルトではローカルキャッシュが使われます。Remote Caching を有効化するには Vercel アカウントが必要です。未登録の場合は [こちら](https://vercel.com/signup?utm_source=turborepo-examples) から作成できます。
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合（推奨）:
 
 ```sh
 cd my-turborepo
 turbo login
 ```
 
-Without global `turbo`, use your package manager:
+global `turbo` を使わない場合:
 
 ```sh
 cd my-turborepo
@@ -156,17 +168,17 @@ yarn exec turbo login
 pnpm exec turbo login
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+この操作で Turborepo CLI と [Vercel アカウント](https://vercel.com/docs/concepts/personal-accounts/overview) の認証が行われます。
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+続けて、リポジトリを Remote Cache に紐付けます。
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合:
 
 ```sh
 turbo link
 ```
 
-Without global `turbo`:
+global `turbo` を使わない場合:
 
 ```sh
 npx turbo link
@@ -174,9 +186,9 @@ yarn exec turbo link
 pnpm exec turbo link
 ```
 
-## Useful Links
+## 参考リンク
 
-Learn more about the power of Turborepo:
+Turborepo の詳細:
 
 - [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
 - [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
