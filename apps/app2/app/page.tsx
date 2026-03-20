@@ -1,6 +1,7 @@
 import Image, { type ImageProps } from "next/image";
 import { getSharedAppMessage } from "@repo/common/app-message";
 import { Button } from "@repo/ui/button";
+import { HealthCheckButton } from "@repo/ui/health-check-button";
 import styles from "./page.module.css";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -39,6 +40,9 @@ export default function Home() {
             app2: Get started by editing <code>apps/app2/app/page.tsx</code>
           </li>
           <li>app2: Save and see your changes instantly.</li>
+          <li>
+            app2 API: <code>/api/health</code>
+          </li>
         </ol>
         <p>{sharedMessage}</p>
 
@@ -70,6 +74,11 @@ export default function Home() {
         <Button appName="app2" className={styles.secondary}>
           Open alert
         </Button>
+        <HealthCheckButton
+          endpoint="/api/health"
+          buttonLabel="Run app2 health API"
+          className={styles.secondary}
+        />
       </main>
       <footer className={styles.footer}>
         <a

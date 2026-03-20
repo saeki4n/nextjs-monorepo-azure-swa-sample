@@ -122,6 +122,15 @@ The following launch profiles are included in `.vscode/launch.json`:
 
 Select either configuration in VSCode "Run and Debug" to debug each Next.js app independently.
 
+### API Routes
+
+Each app has its own Next.js Route Handler:
+
+- `app1`: `/api/health`
+- `app2`: `/api/health`
+
+Both endpoints return JSON with `app`, `message`, and `timestamp`.
+
 ### Remote Caching
 
 > [!TIP]
