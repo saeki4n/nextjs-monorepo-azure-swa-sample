@@ -4,10 +4,20 @@ on:
   push:
     branches:
       - main
+    paths:
+      - apps/app2/**
+      - packages/**
+      - '*'
+      - '.*'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+    paths:
+      - apps/app2/**
+      - packages/**
+      - '*'
+      - '.*'
 
 jobs:
   build_and_deploy_job:
