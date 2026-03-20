@@ -1,200 +1,79 @@
-# Turborepo スターター
+# Next.js Monorepo + Azure Static Web Apps デプロイ成功サンプル
 
-この Turborepo スターターは Turborepo コアチームによって管理されています。
+このリポジトリは、`Next.js` モノレポを `GitHub Actions` ワークフローで `Azure Static Web Apps` にデプロイするための成功サンプルです。
 
-<https://zenn.dev/hayato94087/books/1c14a81b17051f/viewer/d-00-00-00>
+公開リポジトリとして、同じ構成を再現しやすいように最小限の構成と設定ポイントをまとめています。
 
-## このテンプレートの使い方
+## このサンプルで確認できること
 
-次のコマンドを実行します。
+- `Turborepo + pnpm` のモノレポ運用
+- 2つの Next.js アプリ（`app1` / `app2`）を同一リポジトリで管理
+- 共有パッケージ（`@repo/common` / `@repo/ui`）の利用
+- アプリごとに分離した GitHub Actions ワークフローでの Azure SWA デプロイ
 
-```sh
-npx create-turbo@latest
+## リポジトリ構成
+
+```txt
+.
+├─ apps/
+│  ├─ app1/  # Next.js (port: 3000)
+│  └─ app2/  # Next.js (port: 3001)
+├─ packages/
+│  ├─ common/
+│  ├─ ui/
+│  ├─ eslint-config/
+│  └─ typescript-config/
+└─ .github/workflows/
+   ├─ azure-static-web-apps-green-field-05695fa00.yml   # app1 用
+   └─ azure-static-web-apps-orange-forest-03e2a8700.yml # app2 用
 ```
 
-## 構成内容
+## ローカル実行
 
-この Turborepo には以下の apps/packages が含まれています。
+前提:
 
-### Apps と Packages
-
-- `app1`: [Next.js](https://nextjs.org/) アプリ
-- `app2`: もうひとつの [Next.js](https://nextjs.org/) アプリ
-- `@repo/common`: `app1` と `app2` で共有するユーティリティライブラリ
-- `@repo/ui`: `app1` と `app2` で共有する React コンポーネントライブラリ
-- `@repo/eslint-config`: `eslint` 設定（`eslint-config-next` と `eslint-config-prettier` を含む）
-- `@repo/typescript-config`: モノレポ全体で使う `tsconfig.json`
-
-すべての package/app は [TypeScript](https://www.typescriptlang.org/) で構成されています。
-
-### ユーティリティ
-
-この Turborepo では以下のツールを利用できます。
-
-- [TypeScript](https://www.typescriptlang.org/)（静的型チェック）
-- [ESLint](https://eslint.org/)（コード lint）
-- [Prettier](https://prettier.io)（コード整形）
-
-### ビルド
-
-すべての app/package をビルドするには以下を実行します。
-
-[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合（推奨）:
+- Node.js `>= 18`
+- pnpm `9.x`
 
 ```sh
-cd my-turborepo
-turbo build
+pnpm install
+pnpm dev
 ```
 
-global `turbo` を使わない場合:
+主なコマンド:
 
 ```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+pnpm build
+pnpm lint
+pnpm check-types
 ```
 
-特定パッケージのみビルドする場合は [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters) を使います。
+## Azure Static Web Apps デプロイ設定（重要ポイント）
 
-[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合:
+このリポジトリでデプロイ成功を確認した設定は次のとおりです。
 
-```sh
-turbo build --filter=app1
-# app2 をビルドする場合
-turbo build --filter=app2
-```
+- `app_location` は各アプリディレクトリを指定（`apps/app1` / `apps/app2`）
+- `output_location` は空文字（`""`）を指定（Next.js hybrid build）
+- `api_location` は空文字（`""`）を指定
+- workflow の deploy step で `NPM_CONFIG_INSTALL_LINKS: true` を設定
+- 各アプリの `next.config.js` に `transpilePackages: ["@repo/common", "@repo/ui"]` を設定
+- 共有パッケージは `file:../../packages/...` で参照
 
-global `turbo` を使わない場合:
+## 公開リポジトリとして利用する手順
 
-```sh
-npx turbo build --filter=app1
-yarn exec turbo build --filter=app1
-pnpm exec turbo build --filter=app1
-# app2 をビルドする場合
-pnpm exec turbo build --filter=app2
-```
+1. このリポジトリを Fork / Clone する
+2. Azure Static Web Apps を `app1` 用と `app2` 用に作成する
+3. GitHub Secrets にデプロイトークンを設定する
+   - `AZURE_STATIC_WEB_APPS_API_TOKEN_GREEN_FIELD_05695FA00`
+   - `AZURE_STATIC_WEB_APPS_API_TOKEN_ORANGE_FOREST_03E2A8700`
+4. 必要に応じて workflow ファイル内の Secret 名や対象ブランチを変更する
+5. `main` ブランチへ push してデプロイを確認する
 
-### 開発
+## 補足
 
-すべての app/package を開発モードで起動するには以下を実行します。
+- `app1` / `app2` には `/api/health` の Route Handler を用意しています。
+- PR 作成時は preview デプロイ、PR close 時はクローズ処理が走る構成です。
 
-[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合（推奨）:
+## ライセンス
 
-```sh
-cd my-turborepo
-turbo dev
-```
-
-global `turbo` を使わない場合:
-
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-特定パッケージのみ起動する場合は [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters) を使います。
-
-[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合:
-
-```sh
-turbo dev --filter=app1
-# app2 を起動する場合
-turbo dev --filter=app2
-```
-
-global `turbo` を使わない場合:
-
-```sh
-npx turbo dev --filter=app1
-yarn exec turbo dev --filter=app1
-pnpm exec turbo dev --filter=app1
-# app2 を起動する場合
-pnpm exec turbo dev --filter=app2
-```
-
-### VSCode デバッグ
-
-`.vscode/launch.json` には以下の構成が入っています。
-
-- `app1: Full Stack Debug`
-- `app2: Full Stack Debug`
-
-VSCode の「実行とデバッグ」から選択すると、それぞれの Next.js アプリを個別にデバッグできます。
-
-### API ルート
-
-それぞれのアプリに Next.js Route Handler を用意しています。
-
-- `app1`: `/api/health`
-- `app2`: `/api/health`
-
-どちらの API も `app` / `message` / `timestamp` を含む JSON を返します。
-
-### Azure SWA デプロイメモ（成功した構成）
-
-Azure Static Web Apps で Next.js API Routes を含む構成をデプロイする際、以下の設定で成功を確認しました。
-
-- `next.config.js` で `output: "export"` を使わず、Next.js hybrid 構成にする
-- `app_location` は各アプリのディレクトリ（`apps/app1` / `apps/app2`）を指定する
-- `output_location` は空文字（`""`）のままにする
-- `api_location` は空文字（`""`）のままにして、SWA の Next.js function handler に任せる
-- GitHub Actions の deploy step で `NPM_CONFIG_INSTALL_LINKS: true` を設定する
-- 各アプリの `next.config.js` に `transpilePackages: ["@repo/common", "@repo/ui"]` を設定する
-- 共有パッケージは `file:../../packages/...` のローカル依存として扱う
-
-### リモートキャッシュ
-
-> [!TIP]
-> Vercel Remote Cache は全プランで無料です。詳細は [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache) を参照してください。
-
-Turborepo は [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) によって、マシン間でビルドキャッシュを共有できます。チーム開発や CI/CD の高速化に有効です。
-
-デフォルトではローカルキャッシュが使われます。Remote Caching を有効化するには Vercel アカウントが必要です。未登録の場合は [こちら](https://vercel.com/signup?utm_source=turborepo-examples) から作成できます。
-
-[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合（推奨）:
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-global `turbo` を使わない場合:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-この操作で Turborepo CLI と [Vercel アカウント](https://vercel.com/docs/concepts/personal-accounts/overview) の認証が行われます。
-
-続けて、リポジトリを Remote Cache に紐付けます。
-
-[global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) をインストールしている場合:
-
-```sh
-turbo link
-```
-
-global `turbo` を使わない場合:
-
-```sh
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## 参考リンク
-
-Turborepo の詳細:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+このリポジトリは [MIT License](./LICENSE) です。
