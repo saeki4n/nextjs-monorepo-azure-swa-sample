@@ -34,8 +34,8 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           ENABLE_NODE_MONOREPO_BUILD: true
-          PRE_BUILD_COMMAND: "npm install -g pnpm@9.0.0"
-          CUSTOM_BUILD_COMMAND: "pnpm install --frozen-lockfile && pnpm --filter app1 build"
+          NPM_CONFIG_INSTALL_LINKS: true
+          CUSTOM_BUILD_COMMAND: "npm install --include=dev --install-links && npm run build"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
