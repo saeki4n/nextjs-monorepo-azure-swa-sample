@@ -2,6 +2,8 @@
 
 この Turborepo スターターは Turborepo コアチームによって管理されています。
 
+<https://zenn.dev/hayato94087/books/1c14a81b17051f/viewer/d-00-00-00>
+
 ## このテンプレートの使い方
 
 次のコマンドを実行します。
