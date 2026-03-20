@@ -1,17 +1,19 @@
-# Next.js Monorepo + Azure Static Web Apps デプロイ成功サンプル
+[English](./README.md) | [日本語](./README.ja.md)
 
-このリポジトリは、`Next.js` モノレポを `GitHub Actions` ワークフローで `Azure Static Web Apps` にデプロイするための成功サンプルです。
+# Next.js Monorepo + Azure Static Web Apps Deployment Reference
 
-公開リポジトリとして、同じ構成を再現しやすいように最小限の構成と設定ポイントをまとめています。
+This repository is a working reference for deploying a `Next.js` monorepo to `Azure Static Web Apps` using `GitHub Actions`.
 
-## このサンプルで確認できること
+It keeps the setup minimal so the same structure can be reproduced easily in a public repository.
 
-- `Turborepo + pnpm` のモノレポ運用
-- 2つの Next.js アプリ（`app1` / `app2`）を同一リポジトリで管理
-- 共有パッケージ（`@repo/common` / `@repo/ui`）の利用
-- アプリごとに分離した GitHub Actions ワークフローでの Azure SWA デプロイ
+## What This Sample Demonstrates
 
-## リポジトリ構成
+- Monorepo management with `Turborepo + pnpm`
+- Two Next.js apps (`app1` / `app2`) in one repository
+- Shared packages (`@repo/common` / `@repo/ui`)
+- Separate GitHub Actions workflows for per-app Azure SWA deployment
+
+## Repository Structure
 
 ```txt
 .
@@ -24,13 +26,13 @@
 │  ├─ eslint-config/
 │  └─ typescript-config/
 └─ .github/workflows/
-   ├─ azure-static-web-apps-green-field-05695fa00.yml   # app1 用
-   └─ azure-static-web-apps-orange-forest-03e2a8700.yml # app2 用
+   ├─ azure-static-web-apps-green-field-05695fa00.yml   # for app1
+   └─ azure-static-web-apps-orange-forest-03e2a8700.yml # for app2
 ```
 
-## ローカル実行
+## Local Development
 
-前提:
+Prerequisites:
 
 - Node.js `>= 18`
 - pnpm `9.x`
@@ -40,7 +42,7 @@ pnpm install
 pnpm dev
 ```
 
-主なコマンド:
+Main commands:
 
 ```sh
 pnpm build
@@ -48,32 +50,32 @@ pnpm lint
 pnpm check-types
 ```
 
-## Azure Static Web Apps デプロイ設定（重要ポイント）
+## Azure Static Web Apps Deployment Settings (Key Points)
 
-このリポジトリでデプロイ成功を確認した設定は次のとおりです。
+The following configuration is confirmed to work in this repository:
 
-- `app_location` は各アプリディレクトリを指定（`apps/app1` / `apps/app2`）
-- `output_location` は空文字（`""`）を指定（Next.js hybrid build）
-- `api_location` は空文字（`""`）を指定
-- workflow の deploy step で `NPM_CONFIG_INSTALL_LINKS: true` を設定
-- 各アプリの `next.config.js` に `transpilePackages: ["@repo/common", "@repo/ui"]` を設定
-- 共有パッケージは `file:../../packages/...` で参照
+- `app_location` points to each app directory (`apps/app1` / `apps/app2`)
+- `output_location` is an empty string (`""`) for Next.js hybrid build
+- `api_location` is an empty string (`""`)
+- `NPM_CONFIG_INSTALL_LINKS: true` is set in the deploy step of each workflow
+- Each app sets `transpilePackages: ["@repo/common", "@repo/ui"]` in `next.config.js`
+- Shared packages are referenced via `file:../../packages/...`
 
-## 公開リポジトリとして利用する手順
+## How To Reuse This Repository
 
-1. このリポジトリを Fork / Clone する
-2. Azure Static Web Apps を `app1` 用と `app2` 用に作成する
-3. GitHub Secrets にデプロイトークンを設定する
+1. Fork or clone this repository.
+2. Create Azure Static Web Apps for both `app1` and `app2`.
+3. Set deployment tokens in GitHub Secrets:
    - `AZURE_STATIC_WEB_APPS_API_TOKEN_GREEN_FIELD_05695FA00`
    - `AZURE_STATIC_WEB_APPS_API_TOKEN_ORANGE_FOREST_03E2A8700`
-4. 必要に応じて workflow ファイル内の Secret 名や対象ブランチを変更する
-5. `main` ブランチへ push してデプロイを確認する
+4. Update secret names and target branches in workflow files as needed.
+5. Push to `main` and verify deployment.
 
-## 補足
+## Notes
 
-- `app1` / `app2` には `/api/health` の Route Handler を用意しています。
-- PR 作成時は preview デプロイ、PR close 時はクローズ処理が走る構成です。
+- `app1` and `app2` include a `/api/health` Route Handler.
+- The workflows run preview deployment on PR creation and close processing on PR close.
 
-## ライセンス
+## License
 
-このリポジトリは [MIT License](./LICENSE) です。
+This repository is licensed under the [MIT License](./LICENSE).
