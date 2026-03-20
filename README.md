@@ -18,6 +18,7 @@ This Turborepo includes the following packages/apps:
 
 - `app1`: a [Next.js](https://nextjs.org/) app
 - `app2`: another [Next.js](https://nextjs.org/) app
+- `@repo/common`: shared utility library used by `app1` and `app2`
 - `@repo/ui`: a stub React component library shared by both `app1` and `app2` applications
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo

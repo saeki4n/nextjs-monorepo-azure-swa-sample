@@ -1,4 +1,5 @@
 import Image, { type ImageProps } from "next/image";
+import { getSharedAppMessage } from "@repo/common/app-message";
 import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
 
@@ -19,6 +20,8 @@ const ThemeImage = (props: Props) => {
 };
 
 export default function Home() {
+  const sharedMessage = getSharedAppMessage("app2");
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -37,6 +40,7 @@ export default function Home() {
           </li>
           <li>app2: Save and see your changes instantly.</li>
         </ol>
+        <p>{sharedMessage}</p>
 
         <div className={styles.ctas}>
           <a
