@@ -21,10 +21,10 @@ importers:
   apps/app1:
     dependencies:
       '@repo/common':
-        specifier: workspace:*
+        specifier: file:../../packages/common
         version: link:../../packages/common
       '@repo/ui':
-        specifier: workspace:*
+        specifier: file:../../packages/ui
         version: link:../../packages/ui
       next:
         specifier: 16.2.0
@@ -37,10 +37,10 @@ importers:
         version: 19.2.0(react@19.2.0)
     devDependencies:
       '@repo/eslint-config':
-        specifier: workspace:*
+        specifier: file:../../packages/eslint-config
         version: link:../../packages/eslint-config
       '@repo/typescript-config':
-        specifier: workspace:*
+        specifier: file:../../packages/typescript-config
         version: link:../../packages/typescript-config
       '@types/node':
         specifier: ^22.15.3
@@ -61,10 +61,10 @@ importers:
   apps/app2:
     dependencies:
       '@repo/common':
-        specifier: workspace:*
+        specifier: file:../../packages/common
         version: link:../../packages/common
       '@repo/ui':
-        specifier: workspace:*
+        specifier: file:../../packages/ui
         version: link:../../packages/ui
       next:
         specifier: 16.2.0
@@ -77,10 +77,10 @@ importers:
         version: 19.2.0(react@19.2.0)
     devDependencies:
       '@repo/eslint-config':
-        specifier: workspace:*
+        specifier: file:../../packages/eslint-config
         version: link:../../packages/eslint-config
       '@repo/typescript-config':
-        specifier: workspace:*
+        specifier: file:../../packages/typescript-config
         version: link:../../packages/typescript-config
       '@types/node':
         specifier: ^22.15.3
