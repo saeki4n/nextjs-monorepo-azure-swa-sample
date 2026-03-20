@@ -16,9 +16,9 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `app1`: a [Next.js](https://nextjs.org/) app
+- `app2`: another [Next.js](https://nextjs.org/) app
+- `@repo/ui`: a stub React component library shared by both `app1` and `app2` applications
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
@@ -57,15 +57,19 @@ You can build a specific package by using a [filter](https://turborepo.dev/docs/
 With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
 
 ```sh
-turbo build --filter=docs
+turbo build --filter=app1
+# Build app2 instead:
+turbo build --filter=app2
 ```
 
 Without global `turbo`:
 
 ```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+npx turbo build --filter=app1
+yarn exec turbo build --filter=app1
+pnpm exec turbo build --filter=app1
+# Build app2 instead:
+pnpm exec turbo build --filter=app2
 ```
 
 ### Develop
@@ -93,16 +97,29 @@ You can develop a specific package by using a [filter](https://turborepo.dev/doc
 With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
 
 ```sh
-turbo dev --filter=web
+turbo dev --filter=app1
+# Start app2 instead:
+turbo dev --filter=app2
 ```
 
 Without global `turbo`:
 
 ```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+npx turbo dev --filter=app1
+yarn exec turbo dev --filter=app1
+pnpm exec turbo dev --filter=app1
+# Start app2 instead:
+pnpm exec turbo dev --filter=app2
 ```
+
+### VSCode Debug
+
+The following launch profiles are included in `.vscode/launch.json`:
+
+- `app1: Full Stack Debug`
+- `app2: Full Stack Debug`
+
+Select either configuration in VSCode "Run and Debug" to debug each Next.js app independently.
 
 ### Remote Caching
 

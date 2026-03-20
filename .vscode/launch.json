@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "app1: Debug Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm --filter app1 dev",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "app2: Debug Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm --filter app2 dev",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "app1: Debug Browser",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/apps/app1"
+    },
+    {
+      "name": "app2: Debug Browser",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3001",
+      "webRoot": "${workspaceFolder}/apps/app2"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "app1: Full Stack Debug",
+      "configurations": ["app1: Debug Server", "app1: Debug Browser"],
+      "stopAll": true
+    },
+    {
+      "name": "app2: Full Stack Debug",
+      "configurations": ["app2: Debug Server", "app2: Debug Browser"],
+      "stopAll": true
+    }
+  ]
+}

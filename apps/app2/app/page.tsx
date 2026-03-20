@@ -33,9 +33,9 @@ export default function Home() {
         />
         <ol>
           <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
+            app2: Get started by editing <code>apps/app2/app/page.tsx</code>
           </li>
-          <li>Save and see your changes instantly.</li>
+          <li>app2: Save and see your changes instantly.</li>
         </ol>
 
         <div className={styles.ctas}>
@@ -63,7 +63,7 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
+        <Button appName="app2" className={styles.secondary}>
           Open alert
         </Button>
       </main>
